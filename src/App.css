@@ -1,0 +1,241 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+/* nav */
+
+.nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: lightskyblue;
+}
+
+
+.nav_title {
+  text-align: center;
+  font-size: 100px;
+  font-weight: bold;
+  color: white;
+  width: 70%;
+}
+
+.nav_img{
+  width: 15%;
+  display: flex;
+
+}
+
+.nav_img > img {
+  width: 100%;
+
+}
+
+
+
+
+
+/* elements */
+
+.ele {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  margin: 30px 0;
+}
+
+
+/* table */
+
+.ele_table {
+  margin: 10px 0;
+  font-size: 32px;
+  border: 3px solid lightblue;
+}
+
+.ele_table td, .ele_table th {
+  padding: 0 10px;
+}
+
+.ele_table > tbody > tr > td {
+  border: 1px solid skyblue;
+  font-weight: bold;
+
+}
+
+.ele_table input , .ele_table select{
+  width: 100%;
+  border: none;
+  height: 30px;
+  text-align: center;
+  margin-bottom: 15px;  
+  font-size: 20px;
+  font-weight: bold;
+}
+
+
+.ele_table .no {
+  font-size: 16px;
+  text-align: center;
+}
+
+
+/* btn */
+
+.top_btn{
+  display: flex;
+  gap: 15px;
+}
+
+.top_btn input {
+  text-align: center;
+  height: 50px;
+  width: 70px;
+  font-size: 30px;
+  border: none;
+  border-bottom: 3px solid skyblue;
+  color: skyblue;
+  font-weight: bold;
+  
+}
+
+.bot_btn{
+  display: flex;
+  gap: 15px;
+}
+
+.ele button {
+  background-color: lightskyblue;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  text-align: center;
+  height: 50px;
+  width: 100px;
+  border: none;
+  border-radius: 10px;
+}
+
+
+.cal_bottom_btn {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.cal_bottom_btn button{
+  background-color: lightskyblue;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  text-align: center;
+  height: 70px;
+  width: 300px;
+  /* width: 80%; */
+  border: none;
+  border-radius: 10px;
+  margin: 30px 0;
+  /* padding: 10px; */
+
+}
+
+/* cal */
+.cal {
+  margin: 30px 0 ;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.cal > table{
+
+  font-size: 32px;
+  border: 3px solid lightblue;
+  width: 60%;
+}
+
+
+
+.cal > table > tbody >tr > td{
+  text-align: center;
+  border: 1px solid skyblue;
+  font-weight: bold;
+
+}
+
+.cal > table > tbody >tr > td > input{
+  width: 100%;
+  border: none;
+  height: 30px;
+  text-align: center;
+  margin-bottom: 15px;  
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.cal > table th {
+  width: 25%;
+}
+
+
+
+/* footer */
+
+.foot_img {
+  height: 200px;
+  width: 100%;
+  background-image: url('../public/img/geachu.jpg');
+  /* background-size: 30%; */
+}
+
+
+
+@media screen and (max-width: 938px) {
+  .nav_title{
+    font-size: 32px;
+  }
+
+  .ele_table , .cal > table {
+    font-size: 15px;
+  }
+
+  
+
+  .ele_table td, .ele_table th {
+    /* padding: 10px; */
+    padding: 0 5px ;
+  }
+
+  .ele_table input , .ele_table select{
+    margin-bottom: 0px; 
+    font-size: 11px;
+    width: 110%;
+  }
+  .ele_table .no {
+    font-size: 12px;
+  }
+
+  /* cal */
+
+  .cal > table > tbody >tr > td > input{
+    margin-bottom: 0px; 
+    font-size: 20px;
+
+  }
+
+  .foot_img {
+    height: 111px;
+    background-size: 30%;
+  }
+
+  .cal table{
+    width: 95%;
+  }
+  
+
+}
