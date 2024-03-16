@@ -8,13 +8,14 @@ const Cal = ({data, setData}) => {
     const [ratio, setRatio] = useState(0)
 
     const data_btn = () => {
-        setResult([])
-    
+        console.log(data)
     }
-    
+    const result_reset = () => {
+        setResult([])
+    }
     // 데이터 추가로 입력
     const handleInputChange2 = (index, event, field) => {
-      console.log("인덱스 : ", index,"종류 : ", field, "값 : ",event.target.value  )
+    //   console.log("인덱스 : ", index,"종류 : ", field, "값 : ",event.target.value  )
       const newData = [...data];   
       const value = event.target.value.trim() || '';
       newData[index][field] = value;
@@ -30,20 +31,37 @@ const Cal = ({data, setData}) => {
         let total_vol = 0
         let total_weigth = 0
 
+
+        // 세팅용 for 문
         for (let i = 0 ; i < data.length ; i++) {
+
+            let c_type = data[i].type
             let weight = parseFloat(data[i].weight)
             let density = parseFloat(data[i].density)
+            let temp_weight = 0
+            let target = parseFloat(data[i].target)
+
+            const newData = [...data]; 
+
+            // solvent 질량 설정
+            if (c_type === 'solvent' && weight === 1){
+                temp_weight = target * 10 * density
+                newData[i].weight = temp_weight
+                setData(newData)
+            }
 
             total_vol += weight/density/1000
             total_weigth += weight
         }
 
-        // console.log("전체 부피 :", total_vol, "전체 질량 :" , total_weigth)
 
+        // 보정용 for 문 
         for (let i= 0; i < data.length ; i++) {
             let weight = parseFloat(data[i].weight)
             let molMass = parseFloat(data[i].molMass)
             let target = parseFloat(data[i].target)
+            let density = parseFloat(data[i].density)
+            let c_type = data[i].type
 
             const newData = [...data]; 
 
@@ -51,7 +69,7 @@ const Cal = ({data, setData}) => {
             let temp_mol = 0
             let temp_weight =0
 
-            if (data[i].type === 'salt'){
+            if (c_type === 'salt'){
 
                 temp_mol = weight/molMass/total_vol
                 
@@ -62,7 +80,7 @@ const Cal = ({data, setData}) => {
                     count +=1
                 }
 
-            }else if (data[i].type === "additive"){
+            }else if (c_type === "additive"){
                 temp_weight = weight/total_weigth * 100               
                 if (target-temp_weight >= 0.0001 || temp_weight - target >= 0.0001 ){
                     value = weight * target/temp_weight
@@ -70,11 +88,8 @@ const Cal = ({data, setData}) => {
                     setData(newData);
                     count +=1
                 }
-
             }
-
         }
-
         return count
     }
     
@@ -83,10 +98,6 @@ const Cal = ({data, setData}) => {
         setRatio(0)
 
         while (true){
-            
-            console.log(k)
-            
-
             if (parseInt(Cal_target()) === 0){    
                 let temp_arr = []
                 let temp_num = 0
@@ -94,7 +105,6 @@ const Cal = ({data, setData}) => {
                 for(let i=0; i < data.length; i++){
                     temp_arr.push(parseFloat(data[i].weight))
                     temp_num += parseFloat(data[i].weight)
-
                 }
                 setRatio(temp_num)
                 setResult(temp_arr)
@@ -102,26 +112,21 @@ const Cal = ({data, setData}) => {
             }
             k += 1
 
-            if (k == 5000){
+            if (k === 5000){
                 alert("다시 확인해주세요")
                 break
             }
-        }
-
-        
-              
+        }         
     }
 
 
   return (
     <div className='cal'>
-        {/* <button onClick={data_btn}>데이터 확인</button> */}
         <table>
             <thead>
                 <tr>
                     <th>Name</th>
                     <th>목표</th>
-                    <th>weight</th>
                     <th>결과(g)</th>
                     <th>비율</th>
                 </tr>
@@ -130,8 +135,7 @@ const Cal = ({data, setData}) => {
                 {data.map((row,index)=>(
                     <tr key={index}>
                         <td> {row.name} </td>
-                        <td><input type="text" onChange={(e) => handleInputChange2(index, e, 'target')}/></td>
-                        <td><input type="text" onChange={(e) => handleInputChange2(index, e, 'weight')} /></td>
+                        <td><input type="number" onChange={(e) => handleInputChange2(index, e, 'target')}/></td>
                         <td>{ my_result[index]?.toString().slice(0,10)}  </td>
                         <td>{(my_result[index]/ratio*100)?.toString().slice(0,10)}  </td>
                      </tr>
@@ -140,8 +144,9 @@ const Cal = ({data, setData}) => {
             </tbody>
         </table>
         <div className='cal_bottom_btn'>
-            <button onClick={roop}>계산하기</button>
-            <button onClick={data_btn} >결과 초기화</button>
+            <button onClick={roop}>계산</button>
+            {/* <button onClick={data_btn}>확인</button> */}
+            <button onClick={result_reset} >초기화</button>
         </div>
     </div>
   )

@@ -36,7 +36,7 @@ const Elements = ({data , setData}) => {
       // console.log("인덱스 : ", index,"종류 : ", field, "값 : ",event.target.value  )
       const newData = [...data];   
       if (!newData[index]) {
-        newData[index] = { name: '', molMass: '', density: '' , type: '', target:'', weight:''};
+        newData[index] = { name: '', molMass: '', density: '' , type: '', target:'', weight:'1'};
       }
       
       // 입력 필드의 값이 null 또는 undefined인 경우 빈 문자열로 처리
@@ -73,9 +73,9 @@ const Elements = ({data , setData}) => {
                 <tr key={index}>
                     <td className='no'>{index+1} </td>
                     <td><input type="text"  onChange={(e) => handleInputChange(index, e, 'name')} /></td>
-                    <td><input type="text"  onChange={(e) => handleInputChange(index, e, 'molMass')} /></td>
-                    <td><input type="text"  onChange={(e) => handleInputChange(index, e, 'density')} /></td>
-                    {/* <td><input type="text"  onChange={(e) => handleInputChange(index, e, 'type')} /></td> */}
+                    <td><input type="number"  onChange={(e) => handleInputChange(index, e, 'molMass')} /></td>
+                    <td><input type="number"  onChange={(e) => handleInputChange(index, e, 'density')} /></td>
+
                     <td>
                       <select onChange={(e)=> handleInputChange(index, e, 'type')}>
                         <option value="">필수 선택</option>
@@ -84,7 +84,7 @@ const Elements = ({data , setData}) => {
                         <option value="additive">Additive</option>
                       </select>
                     </td>
-                    {/* <td><input type="text"  onChange={(e) => handleInputChange(index, e, 'target')} /></td> */}
+
                 </tr>
             ))}
             </tbody>
