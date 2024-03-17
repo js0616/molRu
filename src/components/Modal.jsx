@@ -1,3 +1,5 @@
+// 세부 설명용 (도움말)
+
 import React, { useState } from 'react';
 
 const Modal = () => {
@@ -65,11 +67,12 @@ const Modal = () => {
         </div>
         {subTextVisibility['계산'] && (
           <div className='sub_text'>
-            계산 : 계산을 진행함 <br />
+            초기값을 계산하여 목표치와 비교 후 보정을 반복함 <br />
+            반복 횟수 : 최대 10000회  <br />
             <br />
             [공통] <br />
-            전체 부피(L) += weight/density/1000 <br />
-            전체 질량(g) += weight <br />
+            total_vol(L) += weight/density/1000 <br />
+            total_weigtht(g) += weight <br />
             <br />
             [Solvent] <br />
             각 용매 부피(mL) = 목표(%) x 10 <br />
@@ -82,9 +85,9 @@ const Modal = () => {
             부족한 비율만큼 질량 값을 보정 <br />
             <br />
             오차 : target - temp_mol <br />
-            조건 : 0.0001 보다 크거나 작은 경우 <br />
+            조건 : 0.0001 미만 <br />
             계산값 = weight/molMass/total_vol <br />
-            보정식 = weight * target/temp_mol <br />
+            보정식 = weight*target/temp_mol <br />
           </div>
         )}
       </div>

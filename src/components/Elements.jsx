@@ -3,6 +3,7 @@ import React, { useRef, useState } from 'react'
 const Elements = ({data , setData}) => {
     // let temp = 0;
     const [rows, setRows] = useState(0);
+    const [inputValue, setInputValue] = useState('');
 
     let my_num = useRef(null);
 
@@ -47,12 +48,21 @@ const Elements = ({data , setData}) => {
     };
 
 
-  //  연산 로직 
+    const handleEnter = (event) => {
+      if (event.key === 'Enter') {
+          // 엔터 키가 눌렸을 때 실행할 함수 호출
+          addRows();
+      }
+    };
 
   return (
     <div className='ele'>
         <div className='top_btn'>
-            <input type="number"  ref={my_num} ></input>
+            <input type="number"  ref={my_num} 
+            value={inputValue}
+            onChange={(event) => setInputValue(event.target.value)}
+            onKeyDown={handleEnter}
+            ></input>
             <button onClick={addRows}> n개추가 </button>
             {/* <button onClick={deleteRow}> 초기화 </button> */}
         </div>

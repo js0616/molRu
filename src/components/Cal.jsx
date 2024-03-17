@@ -1,15 +1,18 @@
 // 계산로직 관련 컴포넌트
 
 import React, { useState } from 'react'
+import Excel from './Excel'
 
 const Cal = ({data, setData}) => {
 
     const [my_result, setResult] = useState([])
     const [ratio, setRatio] = useState(0)
 
+
     const data_btn = () => {
         console.log(data)
     }
+
     const result_reset = () => {
         setResult([])
     }
@@ -27,9 +30,9 @@ const Cal = ({data, setData}) => {
 
     const Cal_target = ()=>{
 
-        let count = 0
-        let total_vol = 0
-        let total_weigth = 0
+        let count = 0 // 보정을 했는지 안했는지 확인용
+        let total_vol = 0 
+        let total_weigtht = 0
 
 
         // 세팅용 for 문
@@ -51,11 +54,13 @@ const Cal = ({data, setData}) => {
             }
 
             total_vol += weight/density/1000
-            total_weigth += weight
+            total_weigtht += weight
+
         }
 
 
-        // 보정용 for 문 
+
+        // 오차에 따른 보정용 반복문 
         for (let i= 0; i < data.length ; i++) {
             let weight = parseFloat(data[i].weight)
             let molMass = parseFloat(data[i].molMass)
@@ -72,7 +77,6 @@ const Cal = ({data, setData}) => {
             if (c_type === 'salt'){
 
                 temp_mol = weight/molMass/total_vol
-                
                 if (target - temp_mol >= 0.0001 || temp_mol - target >= 0.0001){
                     value = weight * target/temp_mol 
                     newData[i].weight = value;
@@ -81,7 +85,7 @@ const Cal = ({data, setData}) => {
                 }
 
             }else if (c_type === "additive"){
-                temp_weight = weight/total_weigth * 100               
+                temp_weight = weight/total_weigtht * 100               
                 if (target-temp_weight >= 0.0001 || temp_weight - target >= 0.0001 ){
                     value = weight * target/temp_weight
                     newData[i].weight = value;
@@ -98,6 +102,8 @@ const Cal = ({data, setData}) => {
         setRatio(0)
 
         while (true){
+
+            // 수렴조건 
             if (parseInt(Cal_target()) === 0){    
                 let temp_arr = []
                 let temp_num = 0
@@ -108,12 +114,15 @@ const Cal = ({data, setData}) => {
                 }
                 setRatio(temp_num)
                 setResult(temp_arr)
+
                 break
             }
+
+            // 반복횟수 제한            
             k += 1
 
-            if (k === 5000){
-                alert("다시 확인해주세요")
+            if (k === 10000){
+                alert("입력 값을 확인해주세요")
                 break
             }
         }         
@@ -146,6 +155,11 @@ const Cal = ({data, setData}) => {
         <div className='cal_bottom_btn'>
             <button onClick={roop}>계산</button>
             {/* <button onClick={data_btn}>확인</button> */}
+            <button>
+                <Excel data={data} my_result={my_result} ratio={ratio} />
+
+            </button>
+            
             <button onClick={result_reset} >초기화</button>
         </div>
     </div>
